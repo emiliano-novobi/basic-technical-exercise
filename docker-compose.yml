@@ -17,20 +17,15 @@ services:
     #
     # After docker-compose up, a new docker image will be built 
     # with the new adjustments on the file ./box/Dockerfile
-
+    
     ports:
       - "8069:8069"
     volumes:
       - ./:/opt/odoo
       - odoo_data:/root/.local/share/Odoo
-    command: bash -c "$${PYTHON_PATH} $${START_ODOO} $${ODOO_PARAM} && tail -f /dev/null"
-    environment:
-      PYTHON_PATH: "/usr/local/bin/python3"
-      START_ODOO: "/opt/odoo/odoo/odoo-bin -c /opt/odoo/odoo.conf"
-      ODOO_PARAM: ""
     depends_on:
-      - nginx
       - postgres
+      - nginx
     restart: unless-stopped
     tty: true
   nginx:
