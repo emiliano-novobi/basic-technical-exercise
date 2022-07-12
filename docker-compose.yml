@@ -6,7 +6,7 @@ services:
     #   image: novobidevops/odoo:[odoo_version]
     # Available [odoo_version]: 10, 11, 12, 13, 14, 15
 
-    image: novobidevops/odoo:14
+    image: novobidevops/odoo:15
     # build: ./box
 
     # If developer want to use their own Docker environment, Do the following actions : 
@@ -23,6 +23,11 @@ services:
     volumes:
       - ./:/opt/odoo
       - odoo_data:/root/.local/share/Odoo
+    command: bash -c "$${PYTHON_PATH} $${START_ODOO} $${ODOO_PARAM} && tail -f /dev/null"
+    environment:
+      PYTHON_PATH: "/usr/local/bin/python3"
+      START_ODOO: "/opt/odoo/odoo/odoo-bin -c /opt/odoo/odoo.conf"
+      ODOO_PARAM: ""
     depends_on:
       - postgres
       - nginx
@@ -37,7 +42,7 @@ services:
     restart: unless-stopped
     tty: true
   postgres:
-    image: postgres:10
+    image: postgres
     ports:
       - "5432:5432"
     volumes:
