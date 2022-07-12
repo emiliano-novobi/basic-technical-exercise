@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright © 2022 Novobi, LLC. See LICENSE file for full copyright and licensing details. -->
+
+<odoo>
+
+    <!--############################## VIEWS ##############################-->
+    <record id="library_book_view_form" model="ir.ui.view">
+        <field name="name">Library Book Form</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <form>
+                <header />
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="author_ids" widget="many2many_tags" />
+                        </group>
+                        <group>
+                            <field name="short_name" />
+                            <field name="date_release" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="library_book_view_tree" model="ir.ui.view">
+        <field name="name">Library Book List</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="date_release" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="library_book_view_kanban" model="ir.ui.view">
+        <field name="name">Library Book Kanban</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="short_name" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <a type="open">
+                                <strong>
+                                    <field name="short_name" />
+                                </strong>
+                            </a>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="library_book_view_search" model="ir.ui.view">
+        <field name="name">Library Book Search</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="author_ids" />
+                <filter string="Without Authors" name="without_author" domain="[('author_ids','=',False)]" />
+            </search>
+        </field>
+    </record>
+
+    <!--############################## ACTIONS ##############################-->
+    <record id='library_book_action' model='ir.actions.act_window'>
+        <field name="name">Library Books</field>
+        <field name="res_model">library.book</field>
+        <field name="view_mode">tree,kanban,form</field>
+    </record>
+
+    <!--############################## MENUS ##############################-->
+    <menuitem name="Novobi Library" id="library_base_menu" web_icon="novobi_library_book,static/description/icon.png" />
+    <menuitem name="Books" id="library_book_menu" parent="library_base_menu" action="library_book_action" />
+
+</odoo>
