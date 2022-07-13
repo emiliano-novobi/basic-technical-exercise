@@ -1,60 +1,49 @@
 <odoo>
-  <data>
-    <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="novobi_emi_library.list">
-      <field name="name">novobi_emi_library list</field>
-      <field name="model">novobi_emi_library.novobi_emi_library</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </tree>
-      </field>
+    <record id="library_book_view_tree_inherit" model="ir.ui.view">
+        <field name="inherit_id" ref="novobi_library_book.library_book_view_tree"></field>
+        <field name="name">novobi_emi_library_list</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name ="isbn" string="ISBN"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name ="short_name" string="Short Name"/>
+                <field name ="status" />
+            </xpath>
+        </field>
     </record>
--->
 
-    <!-- actions opening views on models -->
-<!--
-    <record model="ir.actions.act_window" id="novobi_emi_library.action_window">
-      <field name="name">novobi_emi_library window</field>
-      <field name="res_model">novobi_emi_library.novobi_emi_library</field>
-      <field name="view_mode">tree,form</field>
+    <record id="library_book_view_search_inherit" model="ir.ui.view">
+        <field name="name">Library Book Search Inherit</field>
+        <field name="model">library.book</field>
+        <field name="inherit_id" ref="novobi_library_book.library_book_view_search"></field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="isbn" string="ISBN"/>
+                <filter string="Without Release Date" name="without_author" domain="[('date_release','=',False)]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Status" name="status" context="{'group_by':'status', 'residual_visible':True}"/>
+                </group>
+            </search>
+        </field>
     </record>
--->
 
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="novobi_emi_library.action_server">
-      <field name="name">novobi_emi_library server</field>
-      <field name="model_id" ref="model_novobi_emi_library_novobi_emi_library"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": model._name,
-        }
-      </field>
+    <record id="library_book_view_form_inherit" model="ir.ui.view">
+        <field name="name">Library Book Form Inherit</field>
+        <field name="model">library.book</field>
+        <field name="inherit_id" ref="novobi_library_book.library_book_view_form"></field>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/group">
+                <group>
+                    <field name="isbn" string="ISBN"/>
+                    <field name="status" string="Status"/>
+                </group>
+                <group>
+                    <field name="location" string="Location" attrs="{'required': True}"/>
+                    <field name="current_borrower" string="Current Borrower" attrs="{'readonly': True}"/>
+                </group>
+            </xpath>
+        </field>
     </record>
--->
-
-    <!-- Top menu item -->
-<!--
-    <menuitem name="novobi_emi_library" id="novobi_emi_library.menu_root"/>
--->
-    <!-- menu categories -->
-<!--
-    <menuitem name="Menu 1" id="novobi_emi_library.menu_1" parent="novobi_emi_library.menu_root"/>
-    <menuitem name="Menu 2" id="novobi_emi_library.menu_2" parent="novobi_emi_library.menu_root"/>
--->
-    <!-- actions -->
-<!--
-    <menuitem name="List" id="novobi_emi_library.menu_1_list" parent="novobi_emi_library.menu_1"
-              action="novobi_emi_library.action_window"/>
-    <menuitem name="Server to list" id="novobi_emi_library" parent="novobi_emi_library.menu_2"
-              action="novobi_emi_library.action_server"/>
--->
-  </data>
 </odoo>

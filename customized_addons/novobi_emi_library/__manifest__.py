@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "novobi_emi_library",
+    'name': "Novobi: Emi Library",
     'summary': """
         Book Library customizations
     """,
