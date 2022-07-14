@@ -32,10 +32,10 @@ class LibraryBook(models.Model):
     )
     current_borrower = fields.Many2one('res.partner', string='Current Borrower')
     return_date = fields.Date("Return Date")
-    location = fields.Many2one("book.location", string="Location")
+    location = fields.Many2one("library.book_location", string="Location")
 
 class BookLocation(models.Model):
-    _name = "book.location"
+    _name = "library.book_location"
     _description = "Book Location"
 
     name = fields.Char('Name')

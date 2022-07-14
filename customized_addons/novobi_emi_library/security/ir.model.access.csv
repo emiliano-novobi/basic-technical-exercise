@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_novobi_emi_library_novobi_emi_library,novobi_emi_library.novobi_emi_library,model_novobi_emi_library_novobi_emi_library,base.group_user,1,1,1,1
+access_library_book_location,access_library_book_location,model_library_book_location,base.group_user,1,1,1,1
