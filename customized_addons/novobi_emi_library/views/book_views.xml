@@ -1,7 +1,7 @@
 <odoo>
     <record id="library_book_view_tree_inherit" model="ir.ui.view">
         <field name="inherit_id" ref="novobi_library_book.library_book_view_tree"></field>
-        <field name="name">novobi_emi_library_list</field>
+        <field name="name">Books</field>
         <field name="model">library.book</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="before">
@@ -15,7 +15,7 @@
     </record>
 
     <record id="library_book_view_search_inherit" model="ir.ui.view">
-        <field name="name">Library Book Search Inherit</field>
+        <field name="name">Book Search</field>
         <field name="model">library.book</field>
         <field name="inherit_id" ref="novobi_library_book.library_book_view_search"></field>
         <field name="arch" type="xml">
@@ -34,6 +34,9 @@
         <field name="model">library.book</field>
         <field name="inherit_id" ref="novobi_library_book.library_book_view_form"></field>
         <field name="arch" type="xml">
+            <xpath expr="//form/header" position="inside">
+                <button name="action_lease" type="object" string="Lease"/>
+            </xpath>
             <xpath expr="//form/sheet/group">
                 <group>
                     <field name="isbn" string="ISBN"/>
