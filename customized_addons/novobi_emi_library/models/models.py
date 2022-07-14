@@ -16,9 +16,9 @@ class LibraryBook(models.Model):
     return_date = fields.Date("Return Date")
     location = fields.Many2one("library.book_location", string="Location")
 
-    def action_lease(self):
+    def lease(self):
         return {
-            'name': 'action_lease',
+            'name': 'Lease',
             'view_mode': 'form',
             'res_model': 'library.book_lease',
             'type': 'ir.actions.act_window',
@@ -43,10 +43,3 @@ class BookLease(models.TransientModel):
     book = fields.Many2one('library.book')
     borrower = fields.Many2one('res.partner', string='Borrower')
     return_date = fields.Date("Return Date", required=True)
-
-    def confirm(self):
-        return
-
-    def cancel(self):
-        return
-
