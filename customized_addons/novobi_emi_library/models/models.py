@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import api, models, fields
 
 
 class LibraryBook(models.Model):
@@ -26,6 +26,10 @@ class LibraryBook(models.Model):
             'context': self.env.context,
         }
 
+    def borrow_to(self, borrower):
+        self.current_borrower = borrower
+        self.status = 'borrowed'
+
 
 class BookLocation(models.Model):
     _name = "library.book_location"
@@ -43,3 +47,10 @@ class BookLease(models.TransientModel):
     book = fields.Many2one('library.book')
     borrower = fields.Many2one('res.partner', string='Borrower')
     return_date = fields.Date("Return Date", required=True)
+
+    @api.model
+    def create(self, values):
+        created = super(BookLease, self).create(values)
+        created.book = self.env.context['active_id']
+        created.book.borrow_to(created.borrower)
+        return created
