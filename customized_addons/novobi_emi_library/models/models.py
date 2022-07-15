@@ -2,7 +2,8 @@ from odoo import api, models, fields
 
 
 class LibraryBook(models.Model):
-    _inherit = "library.book"
+    _name = "library.book"
+    _inherit = ["library.book", "mail.thread"]
 
     isbn = fields.Char('ISBN', required=True)
     description = fields.Char('Description', required=False)
@@ -12,7 +13,7 @@ class LibraryBook(models.Model):
         help='Status',
         default='available'
     )
-    current_borrower = fields.Many2one('res.partner', string='Current Borrower')
+    current_borrower = fields.Many2one('res.partner', string='Current Borrower', tracking=True)
     return_date = fields.Date("Return Date")
     location = fields.Many2one("library.book_location", string="Location")
 
