@@ -13,8 +13,9 @@
     'version': '0.1',
     'depends': ['base', 'novobi_library_book'],
     'data': [
-        'security/ir.model.access.csv',
         'security/groups.xml',
+        'security/record_rules.xml',
+        'security/ir.model.access.csv',
         'views/book_views.xml',
         'views/book_location_views.xml',
         'views/templates.xml',
