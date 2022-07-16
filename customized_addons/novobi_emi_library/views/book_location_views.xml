@@ -14,6 +14,7 @@
         <field name="arch" type="xml">
             <tree editable="bottom">
                 <field name="name"/>
+                <field name="total_books"/>
                 <field name="total_available_books"/>
             </tree>
         </field>
