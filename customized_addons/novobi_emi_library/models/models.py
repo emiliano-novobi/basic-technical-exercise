@@ -1,5 +1,6 @@
-from odoo import api, models, fields
 from datetime import date
+from odoo import api, models, fields
+from odoo.exceptions import ValidationError
 
 
 class LibraryBook(models.Model):
@@ -18,6 +19,14 @@ class LibraryBook(models.Model):
     return_date = fields.Date("Return Date")
     location = fields.Many2one("library.book_location", string="Location")
 
+    @api.constrains('isbn')
+    def _check_unique_isbn(self):
+        all_books_except_this = self.search(('id', 'not in', self.ids))
+
+        for book in all_books_except_this:
+            if book.isbn == self.isbn:
+                raise ValidationError(f"Existing ISBN {self.isbn} for this book: {book.name}")
+
     def lease(self):
         return {
             'name': 'Lease',
@@ -34,6 +43,9 @@ class LibraryBook(models.Model):
 
     @api.onchange('date_release')
     def _onchange_date_release(self):
+        if self.date_release is False:
+            return
+
         if self.date_release.to_date() > date.today():
             self.status = 'not_published'
 
