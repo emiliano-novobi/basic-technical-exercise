@@ -46,7 +46,7 @@ class LibraryBook(models.Model):
         if self.date_release is False:
             return
 
-        if self.date_release.to_date() > date.today():
+        if self.date_release > date.today():
             self.status = 'not_published'
 
 
