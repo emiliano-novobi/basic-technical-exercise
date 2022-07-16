@@ -1,4 +1,5 @@
 from odoo import api, models, fields
+from datetime import date
 
 
 class LibraryBook(models.Model):
@@ -30,6 +31,11 @@ class LibraryBook(models.Model):
     def borrow_to(self, borrower):
         self.current_borrower = borrower
         self.status = 'borrowed'
+
+    @api.onchange('date_release')
+    def _onchange_date_release(self):
+        if self.date_release.to_date() > date.today():
+            self.status = 'not_published'
 
 
 class BookLocation(models.Model):
