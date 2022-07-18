@@ -19,6 +19,8 @@
         'views/book_views.xml',
         'views/book_location_views.xml',
         'views/templates.xml',
+        'report/book_location_report.xml',
+        'report/book_location_template.xml',
     ],
     'demo': [
         'demo/demo.xml',

@@ -12,7 +12,8 @@
         <field name="name">Locations</field>
         <field name="model">library.book_location</field>
         <field name="arch" type="xml">
-            <tree editable="bottom">
+<!--            <tree editable="bottom">-->
+            <tree>
                 <field name="name"/>
                 <field name="total_books"/>
                 <field name="total_available_books"/>

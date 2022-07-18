@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_book_location">
+        <t t-foreach="docs" t-as="book_location">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="mt16">
+                            <span t-field="doc.name"/>
+                        </h2>
+
+                        <div class="row mt32 mb32" id="information">
+                            <div name="info_print_date" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Printed Date:</strong>
+                                <p class="m-0" t-esc="time.strftime('%m/%d/%Y')"/>
+                            </div>
+                            <div name="info_author" class="col-auto col-3 mw-100 mb-2">
+                                <strong>By:</strong>
+                                <p class="m-0" t-esc="user.name"/>
+                            </div>
+                        </div>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Book</th>
+                                    <th>Status</th>
+                                    <th>Current Borrower</th>
+                                    <th>Return Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="books" t-value="book_location.mapped('books')"/>
+                                <tr t-foreach="books" t-as="book">
+                                    <td>
+                                        <span t-field="book.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="book.status"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="book.current_borrower.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="book.return_date"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table">
+                            <tbody>
+                                <t t-set="books" t-value="book_location.mapped('books')"/>
+                                <tr>
+                                    <td>
+                                        <span>Total</span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="len(books)"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <template id="report_print_book_location">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="novobi_emi_library.report_book_location"/>
+            </t>
+        </t>
+    </template>
+</odoo>
