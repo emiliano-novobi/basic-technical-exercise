@@ -1,21 +1,18 @@
-# -*- coding: utf-8 -*-
-# from odoo import http
+from odoo.http import request
+
+from odoo import http
 
 
-# class NovobiEmiLibrary(http.Controller):
-#     @http.route('/novobi_emi_library/novobi_emi_library', auth='public')
-#     def index(self, **kw):
-#         return "Hello, world"
+class BookController(http.Controller):
+    # echo '{}' | http  http://localhost:8069/novobi_emi_library/books
+    @http.route('/novobi_emi_library/books', type='json', auth='none')
+    def list(self, **kw):
+        books = request.env['library.book'].sudo().search([])
+        return books.read(['id', 'name', 'isbn'])
 
-#     @http.route('/novobi_emi_library/novobi_emi_library/objects', auth='public')
-#     def list(self, **kw):
-#         return http.request.render('novobi_emi_library.listing', {
-#             'root': '/novobi_emi_library/novobi_emi_library',
-#             'objects': http.request.env['novobi_emi_library.novobi_emi_library'].search([]),
-#         })
 
-#     @http.route('/novobi_emi_library/novobi_emi_library/objects/<model("novobi_emi_library.novobi_emi_library"):obj>', auth='public')
-#     def object(self, obj, **kw):
-#         return http.request.render('novobi_emi_library.object', {
-#             'object': obj
-#         })
+    @http.route('/novobi_emi_library/books/<model("novobi_library_book.library_book"):book>', auth='public')
+    def object(self, book, **kw):
+        return http.request.render('novobi_emi_library.object', {
+            'object': book
+        })
