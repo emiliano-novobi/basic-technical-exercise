@@ -21,11 +21,10 @@ class LibraryBook(models.Model):
 
     @api.constrains('isbn')
     def _check_unique_isbn(self):
-        all_books_except_this = self.search(('id', 'not in', self.ids))
+        other_books_with_same_isbn = self.search([('id', '!=', self.id), ('isbn', '=', self.isbn)])
 
-        for book in all_books_except_this:
-            if book.isbn == self.isbn:
-                raise ValidationError(f"Existing ISBN {self.isbn} for this book: {book.name}")
+        if len(other_books_with_same_isbn) > 0:
+            raise ValidationError(f"Existing ISBN {self.isbn} for this book: {other_books_with_same_isbn[0].name}")
 
     def lease(self):
         return {
