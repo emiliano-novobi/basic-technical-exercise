@@ -16,9 +16,22 @@ class BookController(http.Controller):
         book = request.env['library.book'].sudo().browse([book_id])
         return book.read(['id', 'name', 'isbn'])
 
-    # echo '{"name": "Book REST", "short_name": "BR", "isbn": 10 }' | http post http://localhost:8069/novobi_emi_library/books/create
-    # @http.route('/novobi_emi_library/books/create/<model("novobi_library_book.library_book"):book>', methods=['POST'], auth='none')
-    @http.route('/novobi_emi_library/books/create', methods=['POST'], type='json', auth='none')
+    # echo '{"name": "Book REST", "short_name": "BR", "isbn": 10 }' | http post http://localhost:8069/novobi_emi_library/books
+    @http.route('/novobi_emi_library/books', methods=['POST'], type='json', auth='none')
     def create(self, **kw):
         request.env['library.book'].sudo().create(request.jsonrequest)
+        return True
+
+    # echo '{"name": "Book REST Updated", "short_name": "BRU", "isbn": 10 }' | http put http://localhost:8069/novobi_emi_library/books/14
+    @http.route('/novobi_emi_library/books/<int:book_id>', methods=['PUT'], type='json', auth='none')
+    def update(self, book_id, **kw):
+        book = request.env['library.book'].sudo().browse([book_id])
+        book.write(request.jsonrequest)
+        return True
+
+    # echo '{}' | http delete http://localhost:8069/novobi_emi_library/books/14
+    @http.route('/novobi_emi_library/books/<int:book_id>', methods=['DELETE'], type='json', auth='none')
+    def delete(self, book_id, **kw):
+        book = request.env['library.book'].sudo().browse([book_id])
+        book.unlink()
         return True
