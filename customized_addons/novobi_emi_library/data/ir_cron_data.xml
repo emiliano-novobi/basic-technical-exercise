@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_cron_book_lease_notify_expiration" model="ir.cron">
+        <field name="name">Notify expired book leasing</field>
+        <field name="model_id" ref="model_library_book_lease"/>
+        <field name="state">code</field>
+        <field name="code">model.notify_expired()</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name="interval_number">5</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+    </record>
+</odoo>

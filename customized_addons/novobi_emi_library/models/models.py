@@ -76,3 +76,6 @@ class BookLease(models.TransientModel):
         created.book = self.env.context['active_id']
         created.book.borrow_to(created.borrower)
         return created
+
+    def notify_expired(self):
+        print('Notifying about lease expiration')

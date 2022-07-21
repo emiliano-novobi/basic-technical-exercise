@@ -13,6 +13,7 @@
     'version': '0.1',
     'depends': ['base', 'novobi_library_book'],
     'data': [
+        'data/ir_cron_data.xml',
         'security/groups.xml',
         'security/record_rules.xml',
         'security/ir.model.access.csv',
