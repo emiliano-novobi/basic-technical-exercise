@@ -16,4 +16,4 @@ class BookLocationTest(TransactionCase):
             'location': self.location1.id
         })
 
-        self.assertEquals(1, self.location1.total_books)
+        self.assertEqual(1, self.location1.total_books)
