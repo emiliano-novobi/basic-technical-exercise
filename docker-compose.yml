@@ -9,15 +9,6 @@ services:
 #    image: novobidevops/odoo:15
     build: ./box
 
-    # If developer want to use their own Docker environment, Do the following actions : 
-    #
-    # + comment line #9 
-    # + uncomment line #10. 
-    # + Make adjustment on file ./box/Dockerfile
-    #
-    # After docker-compose up, a new docker image will be built 
-    # with the new adjustments on the file ./box/Dockerfile
-    
     ports:
       - "8069:8069"
     volumes:
