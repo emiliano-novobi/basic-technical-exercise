@@ -40,6 +40,14 @@ class LibraryBook(models.Model):
         self.current_borrower = borrower
         self.status = 'borrowed'
 
+    def mark_as_lost(self):
+        self.status = 'lost'
+        self.current_borrower = False
+        self.return_date = False
+
+    def is_lost(self):
+        return self.status == 'lost'
+
     @api.onchange('date_release')
     def _onchange_date_release(self):
         if self.date_release is False:
