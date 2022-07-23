@@ -2,7 +2,6 @@ from datetime import date
 from odoo import api, models, fields
 from odoo.exceptions import ValidationError
 
-
 class LibraryBook(models.Model):
     _name = "library.book"
     _inherit = ["library.book", "mail.thread"]
@@ -55,35 +54,3 @@ class LibraryBook(models.Model):
 
         if self.date_release > date.today():
             self.status = 'not_published'
-
-
-class BookLocation(models.Model):
-    _name = "library.book_location"
-    _description = "Book Location"
-
-    name = fields.Char('Name')
-    books = fields.One2many('library.book', 'location', string="Books")
-    total_available_books = fields.Integer()
-    total_books = fields.Integer(compute='_compute_total_books')
-
-    @api.depends('books')
-    def _compute_total_books(self):
-        self.total_books = len(self.books)
-
-class BookLease(models.TransientModel):
-    _name = "library.book_lease"
-    _description = "Book Lease"
-
-    book = fields.Many2one('library.book')
-    borrower = fields.Many2one('res.partner', string='Borrower')
-    return_date = fields.Date("Return Date", required=True)
-
-    @api.model
-    def create(self, values):
-        created = super(BookLease, self).create(values)
-        created.book = self.env.context['active_id']
-        created.book.borrow_to(created.borrower)
-        return created
-
-    def notify_expired(self):
-        print('Notifying about lease expiration')
